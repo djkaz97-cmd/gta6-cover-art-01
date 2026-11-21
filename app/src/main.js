@@ -6,9 +6,10 @@ const status = document.getElementById('status');
 const sizeSel = document.getElementById('size');
 const panelsSel = document.getElementById('panels');
 const activeSel = document.getElementById('active');
+const photosInput = document.getElementById('photos');
+const exportBtn = document.getElementById('export');
 
 let photos = [];
-let panelCount = 3;
 let panels = [];
 let active = 0;
 let dragging = false;
@@ -18,8 +19,10 @@ function rebuildPanels(n) {
   const old = panels;
   panels = [];
   for (let i = 0; i < n; i++) panels.push(old[i] || { img: null, zoom: 1, ox: 0, oy: 0, photoIdx: -1 });
-  panelCount = n;
+  panels.length = n;
+  if (active >= n) active = Math.max(n - 1, 0);
   refreshActive();
+  redraw();
 }
 
 function refreshActive() {
@@ -51,7 +54,7 @@ function assignPhotoToActive(idx) {
   redraw();
 }
 
-document.getElementById('photos').addEventListener('change', async (e) => {
+photosInput.addEventListener('change', async (e) => {
   const files = Array.from(e.target.files);
   for (const f of files) {
     const img = await loadImage(URL.createObjectURL(f));
@@ -62,7 +65,7 @@ document.getElementById('photos').addEventListener('change', async (e) => {
   status.textContent = photos.length + ' photo(s) loaded';
 });
 
-panelsSel.addEventListener('change', () => { rebuildPanels(Number(panelsSel.value)); redraw(); });
+panelsSel.addEventListener('change', () => { rebuildPanels(Number(panelsSel.value)); });
 sizeSel.addEventListener('change', resizeCanvas);
 caption.addEventListener('input', redraw);
 activeSel.addEventListener('change', () => { active = Number(activeSel.value); });
@@ -96,7 +99,7 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-document.getElementById('export').addEventListener('click', () => {
+exportBtn.addEventListener('click', () => {
   const [w, h] = sizeSel.value.split('x').map(Number);
   const tmp = document.createElement('canvas');
   tmp.width = w; tmp.height = h;
@@ -120,5 +123,4 @@ function loadImage(url) {
 }
 
 rebuildPanels(3);
-// default canvas size square; size selector controls export + preview
 resizeCanvas();

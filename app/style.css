@@ -6,5 +6,5 @@ html, body { margin: 0; height: 100%; background: #0b0614; color: #f5f0fa; font:
 label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 13px; }
 input[type=text], select { font: inherit; padding: 8px; border: 1px solid #3a2a55; border-radius: 6px; background: #0b0614; color: #fff; }
 button { font: inherit; font-weight: 700; padding: 10px; border: 0; border-radius: 6px; background: linear-gradient(90deg,#ff5e3a,#ff3d7f); color: #fff; cursor: pointer; }
-canvas { max-width: 60vw; max-height: 70vh; box-shadow: 0 8px 40px rgba(255,60,120,0.25); border-radius: 4px; }
-.hint { font-size: 11px; }
+canvas { max-width: 60vw; max-height: 70vh; box-shadow: 0 8px 40px rgba(255,60,120,0.25); border-radius: 4px; display: block; background: #14052a; }
+.hint { font-size: 11px; color: #b9a9d6; }
